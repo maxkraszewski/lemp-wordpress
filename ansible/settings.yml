@@ -1,0 +1,37 @@
+---
+site:
+  domain: 'wordpress.local'
+
+ssh:
+  user: 'vagrant'
+  group: 'vagrant'
+  home: '/home/vagrant'
+
+nginx:
+  user: 'www-data'
+  group: 'www-data'
+  sendfile: 'off'
+  port: '80'
+  dir: '/var/www'
+
+php:
+  appname: 'wordpress'
+  user: 'www-data'
+  group: 'www-data'
+  listen: '/var/run/php5-fpm.sock'
+  ppa: 'ondrej/php5-5.6'
+
+mysql:
+  host: '127.0.0.1'
+  port: '3306'
+  user: 'dbuser'
+  pass: 'dbpass'
+  rootpass: 'rootpass'
+
+wordpress:
+  dir: '/var/www'
+  db_name: 'wordpress'
+  db_user: 'dbuser'
+  db_pass: 'dbpass'
+  db_host: 'localhost'
+  debug: false

@@ -1,0 +1,26 @@
+---
+- name: copy .bash_aliases for better console experience (user)
+  copy:
+    src: '.bash_aliases'
+    dest: '{{ ssh.home }}/.bash_aliases'
+    owner: '{{ ssh.user }}'
+    group: '{{ ssh.group }}'
+    mode: '0644'
+
+- name: copy .bash_aliases for better console experience (root)
+  copy:
+    src: '.bash_aliases'
+    dest: '/root/.bash_aliases'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: update apt-cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: install required system packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - curl
+    - vim
+    - git

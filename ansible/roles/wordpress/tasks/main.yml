@@ -1,0 +1,48 @@
+---
+- name: remove wp-config-sample
+  file:
+    path: '{{ wordpress.dir }}/wp-config-sample.php'
+    state: absent
+  tags: wordpress
+
+- name: fetch random salts for wordpress config
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: 'wpsalt'
+  sudo: no
+  tags: wordpress
+
+- name: copy wp-config
+  template:
+    src: 'wp-config.php.j2'
+    dest: '{{  wordpress.dir }}/wp-config.php'
+  tags: wordpress
+
+- name: setup empty database for wordpress
+  mysql_db:
+    db: '{{ wordpress.db_name }}'
+    login_user: root
+    login_password: '{{ mysql.rootpass }}'
+    state: present
+  tags: wordpress
+
+- name: setup wordpress database user
+  mysql_user:
+    name: '{{ wordpress.db_user }}'
+    password: '{{ wordpress.db_pass }}'
+    login_user: root
+    login_password: '{{ mysql.rootpass }}'
+    priv: '{{ wordpress.db_name }}.*:SELECT,INSERT,UPDATE,DELETE,CREATE'
+    host: '{{ wordpress.db_host }}'
+    state: present
+  tags: wordpress
+
+- name: grant access for root to wordpress database
+  mysql_user:
+    name: root
+    password: '{{ mysql.rootpass }}'
+    login_user: root
+    login_password: '{{ mysql.rootpass }}'
+    append_privs: yes
+    priv: '{{ wordpress.db_name }}.*:ALL'
+    state: present
+  tags: wordpress

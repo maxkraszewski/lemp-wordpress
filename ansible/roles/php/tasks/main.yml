@@ -1,0 +1,31 @@
+---
+- name: add ppa repository for php
+  apt_repository: repo=ppa:'{{ php.ppa }}'
+  tags: php
+
+- name: install php5-fpm and its modules
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-software-properties
+    - php5-cli
+    - php5-fpm
+    - php5-mcrypt
+    - php5-imagick
+    - php5-curl
+    - php5-gd
+    - php5-mysql
+    - php5-xmlrpc
+  tags: php
+
+- name: copy www.conf
+  template:
+    src: 'www.conf.j2'
+    dest: '/etc/php5/fpm/pool.d/www.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  tags: php
+
+- name: ensure php5-fpm is running and starts on boot
+  service: name=php5-fpm state=started enabled=true
+  tags: php

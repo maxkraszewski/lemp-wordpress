@@ -1,0 +1,28 @@
+<?php
+define('DB_NAME', '{{ wordpress.db_name }}');
+define('DB_USER', '{{ wordpress.db_user }}');
+define('DB_PASSWORD', '{{ wordpress.db_pass }}');
+define('DB_HOST', '{{ wordpress.db_host }}');
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', '');
+
+{{ wpsalt.stdout }}
+
+$table_prefix  = 'wp_';
+
+define('WP_DEBUG', {{ wordpress.debug }});
+
+/** Some fixes to do more faster **/
+define('WP_POST_REVISIONS', 3); // days to save post revisions
+define('AUTOSAVE_INTERVAL', 160 ); // 160 seconds
+define('EMPTY_TRASH_DAYS', 5 ); // 5 days
+define('WP_ALLOW_REPAIR', true); // allow repair db
+
+/* That's all, stop editing! Happy blogging. */
+
+/** Absolute path to the WordPress directory. */
+if ( !defined('ABSPATH') )
+  define('ABSPATH', dirname(__FILE__) . '/');
+
+/** Sets up WordPress vars and included files. */
+require_once(ABSPATH . 'wp-settings.php');

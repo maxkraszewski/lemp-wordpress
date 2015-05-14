@@ -26,6 +26,15 @@
     mode: '0644'
   tags: php
 
+- name: copy php.ini
+  template:
+    src: 'php.ini.j2'
+    dest: '/etc/php5/fpm/php.ini'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  tags: php
+
 - name: ensure php5-fpm is running and starts on boot
   service: name=php5-fpm state=started enabled=true
   tags: php

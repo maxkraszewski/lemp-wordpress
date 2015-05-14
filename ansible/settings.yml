@@ -20,6 +20,9 @@ php:
   group: 'www-data'
   listen: '/var/run/php5-fpm.sock'
   ppa: 'ondrej/php5-5.6'
+  ini:
+    upload_max_filesize: '64M'
+    date_timezone: 'America/Argentina/Buenos_Aires'
 
 mysql:
   host: '127.0.0.1'

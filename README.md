@@ -20,4 +20,5 @@ Includes:
 1. Install Virtualbox, Vagrant and Ansible
 2. Clone repository into a desired folder
 3. ```cd``` into repository folder
-4. Start the VM ```vagrant up```
+4. Download latest version of Wordpress and uncompress it.
+5. Start the VM ```vagrant up```

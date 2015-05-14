@@ -12,5 +12,5 @@
 # APP files
 # ============
 .vagrant/
-data/
+wordpress/
 #ansible/settings.yml

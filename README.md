@@ -7,8 +7,6 @@ Includes:
 - Apache 2
 - PHP 5.5
 - MySQL 5.6
-- Memcached 1.4
-- Varnish
 - Wordpress 4.1.1
 
 ## Requirements

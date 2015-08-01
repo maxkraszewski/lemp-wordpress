@@ -1,26 +1,30 @@
 ---
-- name: copy .bash_aliases for better console experience (user)
+- name: copy .bash_aliases for better console experience
   copy:
     src: '.bash_aliases'
     dest: '{{ ssh.home }}/.bash_aliases'
     owner: '{{ ssh.user }}'
     group: '{{ ssh.group }}'
     mode: '0644'
+  tags: system
 
-- name: copy .bash_aliases for better console experience (root)
+- name: copy .vimrc for better vim experience
   copy:
-    src: '.bash_aliases'
-    dest: '/root/.bash_aliases'
-    owner: 'root'
-    group: 'root'
+    src: '.vimrc'
+    dest: '{{ ssh.home }}/.vimrc'
+    owner: '{{ ssh.user }}'
+    group: '{{ ssh.group }}'
     mode: '0644'
+  tags: system
 
 - name: update apt-cache
   apt: update_cache=yes cache_valid_time=3600
+  tags: system
 
 - name: install required system packages
   apt: pkg={{ item }} state=latest
   with_items:
     - curl
+    - htop
     - vim
-    - git
+  tags: system

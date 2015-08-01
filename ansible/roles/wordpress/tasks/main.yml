@@ -1,28 +1,11 @@
 ---
-- name: remove wp-config-sample
-  file:
-    path: '{{ wordpress.dir }}/wp-config-sample.php'
-    state: absent
-  tags: wordpress
-
-- name: fetch random salts for wordpress config
-  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
-  register: 'wpsalt'
-  sudo: no
-  tags: wordpress
-
-- name: copy wp-config
-  template:
-    src: 'wp-config.php.j2'
-    dest: '{{  wordpress.dir }}/wp-config.php'
-  tags: wordpress
-
 - name: setup empty database for wordpress
   mysql_db:
     db: '{{ wordpress.db_name }}'
     login_user: root
     login_password: '{{ mysql.rootpass }}'
     state: present
+  register: new_wp_db
   tags: wordpress
 
 - name: setup wordpress database user
@@ -45,4 +28,66 @@
     append_privs: yes
     priv: '{{ wordpress.db_name }}.*:ALL'
     state: present
+  when: new_wp_db.changed
+  tags: wordpress
+
+- name: download wp-cli
+  get_url:
+    url: 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar'
+    dest: '/usr/local/bin/wp'
+  tags: wordpress
+
+- name: make wp-cli executable
+  file:
+    path: '/usr/local/bin/wp'
+    mode: '0755'
+  tags: wordpress
+
+- name: check if wordpress is downloaded
+  stat:
+    path: '{{wordpress.dir}}/wp-load.php'
+  register: wp_is_present
+  tags: wordpress
+
+- name: download wordpress
+  command: wp core download --path='{{wordpress.dir}}' --allow-root
+  when: wp_is_present.stat.exists == False
+  tags: wordpress
+
+- name: check if wp-config is present
+  stat:
+    path: '{{wordpress.dir}}/wp-config.php'
+  register: wp_config_is_present
+  tags: wordpress
+
+- name: generate wp-config
+  command: wp core config \
+            --dbname='{{wordpress.db_name}}' \
+            --dbuser='{{wordpress.db_user}}' \
+            --dbpass='{{wordpress.db_pass}}' \
+            --dbhost='{{wordpress.db_host}}' \
+            --allow-root
+  args:
+    chdir: '{{wordpress.dir}}'
+  when: wp_config_is_present.stat.exists == False
+  register: wp_install
+  tags: wordpress
+
+- name: install wordpress
+  command: wp core install \
+            --url='http://{{ site.domain }}' \
+            --title='{{ site.title }}' \
+            --admin_user={{ wordpress.user }} \
+            --admin_password={{ wordpress.pass }} \
+            --admin_email={{ wordpress.email }} \
+            --allow-root
+  args:
+    chdir: '{{wordpress.dir}}'
+  when: wp_install.changed
+  tags: wordpress
+
+- name: remove wp-config-sample
+  file:
+    path: '{{ wordpress.dir }}/wp-config-sample.php'
+    state: absent
   tags: wordpress

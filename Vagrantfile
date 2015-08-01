@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "wordpress"
-  config.vm.network :private_network, ip: "192.168.100.103"
+  config.vm.network :private_network, ip: "192.168.100.101"
 
   config.vm.provider :virtualbox do |vb|
     vb.name = "wordpress"
@@ -23,5 +23,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Sync Data Folder
-  config.vm.synced_folder "wordpress/", "/var/www/", owner: "www-data", group: "www-data"
+  config.vm.synced_folder "data/", "/var/www/", owner: "www-data", group: "www-data"
 end

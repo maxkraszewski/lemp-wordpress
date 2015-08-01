@@ -1,6 +1,7 @@
 ---
 site:
   domain: 'wordpress.local'
+  title: 'WP Local'
 
 ssh:
   user: 'vagrant'
@@ -33,6 +34,9 @@ mysql:
 
 wordpress:
   dir: '/var/www'
+  user: 'wpadmin'
+  pass: 'wppass'
+  email: 'wpadmin@wordpress.local'
   db_name: 'wordpress'
   db_user: 'dbuser'
   db_pass: 'dbpass'

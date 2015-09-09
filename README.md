@@ -41,7 +41,7 @@ cd lemp-wordpress
   The setup will take some time to finish. In the meantime, you can have a [sword fight](http://xkcd.com/303/).
 
 7. Browse to [http://wordpress.local](http://wordpress.local) and enjoy.
-8. You can login to the WP Admin Panel in [http://wordpress.local/wp-admin](http://wordpress.loca/wp-admin) with user: ```wpadmin``` and password: ```wppass```
+8. You can login to the WP Admin Panel in [http://wordpress.local/wp-admin](http://wordpress.local/wp-admin) with user: ```wpadmin``` and password: ```wppass```
 
 ---
 #### Tips and Hints:

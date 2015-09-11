@@ -6,7 +6,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "lemp-wordpress.local"
   config.vm.network :private_network, ip: "192.168.100.101"
-  config.hostsupdater.aliases = ["www.lemp-wordpress.local"]
 
   config.vm.provider :virtualbox do |vb|
     vb.name = "wordpress-lemp"

@@ -4,11 +4,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "wordpress"
+  config.vm.hostname = "lemp-wordpress.local"
   config.vm.network :private_network, ip: "192.168.100.101"
+  config.hostsupdater.aliases = ["www.lemp-wordpress.local"]
 
   config.vm.provider :virtualbox do |vb|
-    vb.name = "wordpress"
+    vb.name = "wordpress-lemp"
     vb.memory = 512
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]

@@ -1,6 +1,6 @@
 ---
 site:
-  domain: 'wordpress.local'
+  domain: 'lemp-wordpress.local'
   title: 'WP Local'
 
 ssh:

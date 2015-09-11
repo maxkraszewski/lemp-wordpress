@@ -7,7 +7,9 @@ Includes:
 - Nginx 1.4.6
 - PHP 5.6
 - MySQL 5.5
-- Wordpress 4.3
+- Wordpress (latest)
+
+> If you want use Apache instead of nginx, you might check this repository: https://github.com/minimalart/lamp-wordpress
 
 ## Requirements
 - [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
@@ -44,11 +46,11 @@ You will ask for your machine admin password to update host file.
   The setup will take some time to finish. In the meantime, you can have a [sword fight](http://xkcd.com/303/).
 
 7. Browse to [http://lemp-wordpress.local](http://lemp-wordpress.local) and enjoy.
-8. You can login to the WP Admin Panel in [http://lemp-wordpress.local/wp-admin](http://lemp-wordpress.local/wp-admin) with user: ```wpadmin``` and password: ```wppass```
+8. You can login to the WP Admin Panel in [http://lemp-wordpress.local/wp-admin](http://lemp-wordpress.local/wp-admin) with user: `wpadmin` and password: `wppass`
 
 ---
 #### Tips and Hints:
 
 * All users and passwords for accesing WP Admin Panel are located in ***ansible/settings.yml*** file.
-* You can ```ssh```into the VM with ```vagrant ssh```command, with no password.
-* ***WP-CLI*** is installed, so you can run ```wp``` commands as described in [http://wp-cli.org/](http://wp-cli.org/)
+* You can `ssh` into the VM with `vagrant ssh` command, with no password.
+* ***WP-CLI*** is installed, so you can run `wp` commands as described in [http://wp-cli.org/](http://wp-cli.org/)
